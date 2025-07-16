@@ -27,28 +27,22 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
           <div class="participants-section">
             <h5>Participants:</h5>
-            <ul class="participants-list">
-              ${
-                details.participants.length
-                  ? (() => {
-                      const fragment = document.createDocumentFragment();
-                      details.participants.forEach(email => {
-                        const li = document.createElement("li");
-                        li.textContent = email;
-                        fragment.appendChild(li);
-                      });
-                      return fragment;
-                    })()
-                  : (() => {
-                      const li = document.createElement("li");
-                      li.innerHTML = "<em>No participants yet</em>";
-                      return li;
-                    })()
-              }
-            </ul>
+            <ul class="participants-list"></ul>
           </div>
         `;
 
+        const participantsList = activityCard.querySelector(".participants-list");
+        if (details.participants.length) {
+          details.participants.forEach(email => {
+            const li = document.createElement("li");
+            li.textContent = email;
+            participantsList.appendChild(li);
+          });
+        } else {
+          const li = document.createElement("li");
+          li.innerHTML = "<em>No participants yet</em>";
+          participantsList.appendChild(li);
+        }
         activitiesList.appendChild(activityCard);
 
         // Add option to select dropdown
