@@ -30,8 +30,20 @@ document.addEventListener("DOMContentLoaded", () => {
             <ul class="participants-list">
               ${
                 details.participants.length
-                  ? details.participants.map(email => `<li>${email}</li>`).join("")
-                  : `<li><em>No participants yet</em></li>`
+                  ? (() => {
+                      const fragment = document.createDocumentFragment();
+                      details.participants.forEach(email => {
+                        const li = document.createElement("li");
+                        li.textContent = email;
+                        fragment.appendChild(li);
+                      });
+                      return fragment;
+                    })()
+                  : (() => {
+                      const li = document.createElement("li");
+                      li.innerHTML = "<em>No participants yet</em>";
+                      return li;
+                    })()
               }
             </ul>
           </div>
